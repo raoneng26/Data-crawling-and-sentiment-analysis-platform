@@ -1,6 +1,5 @@
 streamlit==1.29.0
-selenium==4.8.0
-PyVirtualDisplay==3.0
+selenium==4.16.0
 seleniumbase==4.22.5
 streamlit-on-Hover-tabs==1.0.1
 webdriver-manager==3.8.5
