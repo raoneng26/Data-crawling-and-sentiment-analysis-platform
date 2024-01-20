@@ -1,6 +1,6 @@
 streamlit==1.29.0
 selenium==4.16.0
-seleniumbase
+seleniumbase==4.22.5
 streamlit-on-Hover-tabs==1.0.1
 webdriver-manager==3.8.5
 requests==2.31.0
