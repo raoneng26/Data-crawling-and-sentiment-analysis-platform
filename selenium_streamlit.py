@@ -100,14 +100,14 @@ for i in range(1, 50):
         if blogs:
             for blog in blogs:
                 publish_time = blog.find_element(By.CSS_SELECTOR, "div.from> a:nth-child(1)").text
-                print(publish_time)
+                # print(publish_time)
                 up_name = blog.find_element(By.CSS_SELECTOR, ".name").text
-                print(up_name)
+                # print(up_name)
                 try:
                     blog_url = blog.find_element(By.CSS_SELECTOR, "div.from> a:nth-child(1)").get_attribute('href')
                 except:
                     blog_url = 'NULL'
-                print(blog_url)
+                # print(blog_url)
                 data.append({"发布者": up_name, "发布时间": publish_time, "博客url链接": blog_url})
         else:
             st.warning('爬取失败')
