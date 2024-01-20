@@ -4,7 +4,7 @@ seleniumbase==4.22.5
 streamlit-on-Hover-tabs==1.0.1
 webdriver-manager==3.8.5
 requests==2.31.0
-protobuf==3.20.2
+protobuf
 paddle-bfloat==0.1.7
 paddle2onnx==1.0.6
 paddlefsl==1.1.0
