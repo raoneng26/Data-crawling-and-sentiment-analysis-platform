@@ -10,4 +10,4 @@ paddle2onnx==1.0.6
 paddlefsl==1.1.0
 paddlehub==2.3.1
 paddlenlp==2.6.0
-paddlepaddle==2.5.1
+paddlepaddle
