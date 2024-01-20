@@ -1,4 +1,4 @@
-streamlit==1.29.0
+streamlit==1.27.2
 selenium==4.16.0
 seleniumbase
 streamlit-on-Hover-tabs==1.0.1
