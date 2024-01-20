@@ -3,5 +3,5 @@ selenium==4.16.0
 seleniumbase==4.22.5
 streamlit-on-Hover-tabs==1.0.1
 webdriver-manager==3.8.5
-requests==2.27.1
+requests==2.31.0
 paddlehub==2.3.1
