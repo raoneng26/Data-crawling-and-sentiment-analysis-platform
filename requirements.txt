@@ -4,7 +4,7 @@ docxtpl
 numpy
 paddlehub==2.3.1
 protobuf==3.20.2
-paddlepaddle==2.4.2
+paddlepaddle==2.5.1
 requests==2.31.0
 streamlit_echarts
 snownlp
