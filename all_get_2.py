@@ -251,7 +251,8 @@ class GetWeiboInfo:
 
 
 
-lda_news = hub.load(name="lda_news", version='2.0.0')
+lda_news = hub.Module(name="lda_news")
+
 
 
 def weibo(url1, num1, key, driver):
