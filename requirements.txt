@@ -12,7 +12,6 @@ backports.tempfile
 backports.weakref==1.0.post1
 bce-python-sdk==0.8.90
 beautifulsoup4
-build-essential
 blinker==1.6.2
 boltons
 brotlipy==0.7.0
