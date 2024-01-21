@@ -310,37 +310,101 @@ def find_imppost_data(file):
     df = data.sort_values(by="评论时间", ascending=True)
     df['评论时间'] = pd.to_datetime(df['评论时间'])
     df['日期'] = df['评论时间'].dt.strftime('%Y-%m-%d')
+    # print(df['日期'].to_string())
     df_deduplicated = df.drop_duplicates(subset=['发布者', '文本'], keep='first')
     df_sorted = df_deduplicated.sort_values(['日期', '点赞数'], ascending=[True, False])
-    posts_dict_poster= pd.Series(df_sorted[['url']].values.tolist(), index=df_sorted['日期']).to_dict()
-    posts_dict = pd.Series(df_sorted[['文本', '发布者', 'url']].values.tolist(), index=df_sorted['日期']).to_dict()
+    posts_dict_poster= pd.Series(df_sorted[[ '发布者']].values.tolist(), index=df_sorted['日期']).to_dict()
+    posts_dict = pd.Series(df_sorted[['文本', '发布者']].values.tolist(), index=df_sorted['日期']).to_dict()
+    # print('posts_dict',posts_dict)
+    # print('posts_dict_poster',posts_dict_poster)
     return(posts_dict,posts_dict_poster)
 
 
-def match_url(dict_, file):
-    file.seek(0)
-    if 'xlsx' in file.name:
-        url_data = pd.read_excel(io.BytesIO(file.read()))
+def match_url(dict_, csv_file):
+    csv_file.seek(0)
+    if 'xlsx' in csv_file.name:
+        url_data = pd.read_excel(io.BytesIO(csv_file.read()))
     else:
-        url_data = pd.read_csv(io.BytesIO(file.read()), encoding='utf-8', sep=';')
+        url_data = pd.read_csv(io.BytesIO(csv_file.read()), encoding='utf-8', sep=';')
     result_dict = {}
+    # print('dict_',dict_)
+    # print("url_data",url_data)
     for date, publisher in dict_.items():
-        date_str = datetime.strptime(date, '%Y-%m-%d').strftime('%m月%d日')
+        date_str = datetime.strptime(date, '%Y-%m-%d').strftime('%Y年%m月%d日')
         matched_row = url_data[(url_data['发布时间'].str.startswith(date_str)) & (url_data['发布者'] == publisher[0])]
         if not matched_row.empty:
-            result_dict[date] = matched_row['博客url链接'].values[0]
+            result_dict[date] = matched_row['url'].values[0]
         else:
             # 如果当天没有找到匹配的数据，尝试在前几天找
             for i in range(1, 8):  # 尝试在前7天找
-                prev_date_str = (datetime.strptime(date, '%Y-%m-%d') - timedelta(days=i)).strftime('%m月%d日')
+                prev_date_str = (datetime.strptime(date, '%Y-%m-%d') - timedelta(days=i)).strftime('%Y年%m月%d日')
                 matched_row_prev = url_data[(url_data['发布时间'].str.startswith(prev_date_str)) & (url_data['发布者'] == publisher[0])]
                 if not matched_row_prev.empty:
-                    result_dict[date] = matched_row_prev['博客url链接'].values[0]
+                    result_dict[date] = matched_row_prev['url'].values[0]
                     break
             else:
                 result_dict[date] = None
     # print(result_dict)
     return result_dict
+
+
+
+def add_publish_time(df, cluster):
+    # 将cluster的url设为索引，方便后续的匹配操作
+    cluster.set_index('博客url链接', inplace=True)
+    # 使用map函数，将df中的url映射到cluster中的发布时间
+    df['发布时间'] = df['url'].map(cluster['发布时间'])
+    # 获取'发布时间'列
+    publish_time = df['发布时间']
+    # 删除原来的'发布时间'列
+    df.drop(labels=['发布时间'], axis=1, inplace=True)
+    # 将'发布时间'列插入到第二个位置
+    df.insert(1, '发布时间', publish_time)
+
+    return df
+
+
+# def find_imppost_data(file):
+#     file.seek(0)
+#     if 'xlsx' in file.name:
+#         data = pd.read_excel(io.BytesIO(file.read()))
+#     else:
+#         data = pd.read_csv(io.BytesIO(file.read()), encoding='utf-8', sep=';')
+#     data['评论时间'] = change_date(data['评论时间'].values)
+#     df = data.sort_values(by="评论时间", ascending=True)
+#     df['评论时间'] = pd.to_datetime(df['评论时间'])
+#     df['日期'] = df['评论时间'].dt.strftime('%Y-%m-%d')
+#     df_deduplicated = df.drop_duplicates(subset=['发布者', '文本'], keep='first')
+#     df_sorted = df_deduplicated.sort_values(['日期', '点赞数'], ascending=[True, False])
+#     posts_dict_poster= pd.Series(df_sorted[['url']].values.tolist(), index=df_sorted['日期']).to_dict()
+#     posts_dict = pd.Series(df_sorted[['文本', '发布者', 'url']].values.tolist(), index=df_sorted['日期']).to_dict()
+#     return(posts_dict,posts_dict_poster)
+
+
+# def match_url(dict_, file):
+#     file.seek(0)
+#     if 'xlsx' in file.name:
+#         url_data = pd.read_excel(io.BytesIO(file.read()))
+#     else:
+#         url_data = pd.read_csv(io.BytesIO(file.read()), encoding='utf-8', sep=';')
+#     result_dict = {}
+#     for date, publisher in dict_.items():
+#         date_str = datetime.strptime(date, '%Y-%m-%d').strftime('%m月%d日')
+#         matched_row = url_data[(url_data['发布时间'].str.startswith(date_str)) & (url_data['发布者'] == publisher[0])]
+#         if not matched_row.empty:
+#             result_dict[date] = matched_row['博客url链接'].values[0]
+#         else:
+#             # 如果当天没有找到匹配的数据，尝试在前几天找
+#             for i in range(1, 8):  # 尝试在前7天找
+#                 prev_date_str = (datetime.strptime(date, '%Y-%m-%d') - timedelta(days=i)).strftime('%m月%d日')
+#                 matched_row_prev = url_data[(url_data['发布时间'].str.startswith(prev_date_str)) & (url_data['发布者'] == publisher[0])]
+#                 if not matched_row_prev.empty:
+#                     result_dict[date] = matched_row_prev['博客url链接'].values[0]
+#                     break
+#             else:
+#                 result_dict[date] = None
+#     # print(result_dict)
+#     return result_dict
 
 
 def main():
@@ -530,6 +594,7 @@ def main():
 
                     # 创建一个DataFrame，列名为你指定的列名，数据为你刚刚获取的数据
                     df = pd.DataFrame(data, columns=["发布者","IP属地","帖子账号粉丝数", "转发数", "评论数", "点赞数", "文本", "话题", "一级账号粉丝数","用户名","评论属地", "评论内容", "评论时间", "评论点赞数", "主题相似度" ,"标记", "url"])
+                    df = add_publish_time(df, cluster)  # 添加发布时间
                     st.info('根据主题相似度过滤：')
                     clean_data = all_get_2.cleandata(df)  # 清理数据
                     st.info("信息过滤完成")
@@ -625,14 +690,12 @@ def main():
                         if uploaded_file4 is not None:
                             waring.empty()
                             st.session_state.file_in=uploaded_file4
-                          
-                            
-                            posts_dict, st.session_state.post_url = find_imppost_data(uploaded_file4)
 
-                            # if 'orifile'  in st.session_state:
-                            #     st.session_state.post_url=match_url(post_poster,st.session_state.orifile)
-                            # else:
-                            #     st.session_state.post_url=None
+
+                            post_all,post_poster=find_imppost_data(uploaded_file4)
+                            st.session_state.post_url=match_url(post_poster,uploaded_file4)
+
+
                             st.success('upload success!')       
                             analysis('群体情绪趋势图',uploaded_file4)
                             unploaded_in.empty()
@@ -644,13 +707,8 @@ def main():
                     else:
                         uploaded_file4=st.session_state.file_in
                        
-                      
-                        posts_dict, st.session_state.post_url = find_imppost_data(uploaded_file4)
-                        
-                        # if 'orifile'  in st.session_state:
-                        #     st.session_state.post_url=match_url(post_poster,st.session_state.orifile)
-                        # else:
-                        #     st.session_state.post_url=None
+                        post_all,post_poster=find_imppost_data(uploaded_file4)
+                        st.session_state.post_url=match_url(post_poster,uploaded_file4)
                         analysis('群体情绪趋势图',uploaded_file4)
                     
                         if st.session_state.data:
