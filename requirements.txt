@@ -1,7 +1,7 @@
 datetime
 docx2pdf
 docxtpl
-numpy
+numpy==1.20.0
 paddlehub==2.3.1
 protobuf==3.20.0
 paddlepaddle==2.4.2
