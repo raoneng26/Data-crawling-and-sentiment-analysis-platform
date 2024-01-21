@@ -442,7 +442,7 @@ def main():
                 file = '微博' + st.session_state.keyword + '.csv'
                 date = st.text_input('请输入起止时间(eg.2023-09-01-0:2023-11-08-23):')
                 if date:
-                    st.info('请前往微博页面完成登陆')
+                    # st.info('请前往微博页面完成登陆')
                     weibo_url = 'https://s.weibo.com/'
 
                     _ = installff()
