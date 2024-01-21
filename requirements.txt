@@ -124,7 +124,6 @@ PySocks
 python-dateutil
 python-dotenv==1.0.0
 python-multipart==0.0.6
-python3-dev
 pytz
 PyVirtualDisplay==3.0
 PyYAML
