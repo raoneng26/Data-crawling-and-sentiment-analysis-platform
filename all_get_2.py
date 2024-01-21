@@ -251,7 +251,7 @@ class GetWeiboInfo:
 
 
 
-lda_news = hub.Module(name="lda_news")
+lda_news = hub.load(name="lda_news")
 
 
 
