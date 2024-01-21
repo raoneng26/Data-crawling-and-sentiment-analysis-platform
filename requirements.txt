@@ -78,6 +78,7 @@ mdurl==0.1.2
 more-itertools==10.1.0
 multidict==6.0.4
 multiprocess==0.70.12.2
+mysql-devel
 nbformat
 numba==0.58.1
 numpy
