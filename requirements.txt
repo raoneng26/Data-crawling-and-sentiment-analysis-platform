@@ -11,5 +11,5 @@ streamlit-on-Hover-tabs==1.0.1
 streamlit_card
 streamlit_elements
 selenium==4.8.0
-seleniumbase
+seleniumbase==4.22.5
 webdriver-manager==3.8.5
