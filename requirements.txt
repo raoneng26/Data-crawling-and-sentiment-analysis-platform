@@ -147,7 +147,7 @@ sniffio==1.3.0
 soupsieve
 starlette==0.27.0
 streamlit==1.27.2
-streamlit-on-hover-tabs
+streamlit-on-Hover-tabs==1.0.1
 streamlit_card
 streamlit_elements
 selenium==4.8.0
