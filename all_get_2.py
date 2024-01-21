@@ -13,6 +13,7 @@ import paddlehub as hub
 from selenium.webdriver.common.by import By
 
 
+
 def view_bar(num, total):
     rate = float(num) / float(total)
     rate_num = int(rate * 100)
@@ -252,7 +253,6 @@ class GetWeiboInfo:
 
 
 lda_news = hub.Module(name="lda_news")
-
 
 
 def weibo(url1, num1, key, driver):
