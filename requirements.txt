@@ -30,7 +30,6 @@ cycler==0.11.0
 datasets==2.14.4
 datetime
 decorator==5.1.1
-default-libmysqlclient-dev
 defusedxml
 docx2pdf
 docxtpl
@@ -79,7 +78,7 @@ mdurl==0.1.2
 more-itertools==10.1.0
 multidict==6.0.4
 multiprocess==0.70.12.2
-mysqlclient
+mysql-connector-python
 nbformat
 numba==0.58.1
 numpy
