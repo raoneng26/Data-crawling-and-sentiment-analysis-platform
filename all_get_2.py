@@ -389,4 +389,4 @@ def cleandata(data):
 
 
 
-remove_duplicates('2023台风tweets_by_region.csv','2023台风tweets_by_region.csv')
+# remove_duplicates('2023台风tweets_by_region.csv','2023台风tweets_by_region.csv')
