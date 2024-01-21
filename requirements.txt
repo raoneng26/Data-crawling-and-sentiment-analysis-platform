@@ -123,6 +123,7 @@ python-dateutil
 python-dotenv==1.0.0
 python-multipart==0.0.6
 pytz
+PyVirtualDisplay==3.0
 PyYAML
 pyzmq==25.1.1
 QtPy
