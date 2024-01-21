@@ -139,7 +139,7 @@ scipy==1.11.2
 semantic-version==2.10.0
 streamlit_echarts
 selenium==4.16.0
-seleniumbase
+
 sentencepiece==0.1.99
 seqeval==1.2.2
 setuptools-rust==1.8.1
