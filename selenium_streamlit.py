@@ -230,6 +230,8 @@ def report_show():
         
     if "日本" in st.session_state.file_in.name:
         reporturl=r"https://shimo.im/file/m8AZMmW044Sx5xkb"
+    else:
+        reporturl=r"https://shimo.im/file/m8AZMmW044Sx5xkb"
     with open(reportpath1, "rb") as f:
         data = f.read()
         encoded = base64.b64encode(data)
