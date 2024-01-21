@@ -276,10 +276,13 @@ def analysis(side_bar,uploaded_file):
         dp, dz, dn = 画图.emotion_tendency(uploaded_file,st.session_state.average_score)
         if st.session_state.post_url is None:
             st.session_state.post_url = {k: "#" for k in dp.keys()}
+        st.session_state.post_url = {date: st.session_state.post_url.get(date, "#") for date in dp.keys()}
+        # print(st.session_state.post_url)
+        # print(dp)
         option = {
             'title': {'text': '群体情绪趋势图'},
             'legend': {'data': ['正面', '中性', '负面']},
-            'xAxis': {'type': 'category', 'data': [list(z) for z in zip(dp.keys())], 'axisLabel': {'interval': 0}},
+            'xAxis': {'type': 'category', 'data': list(dp.keys()), 'axisLabel': {'interval': 0}},
             'yAxis': {'type': 'value'},
             'tooltip': {               
                 'show': 'true',
