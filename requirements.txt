@@ -70,6 +70,7 @@ jupyter_core
 kiwisolver==1.4.5
 libarchive-c
 llvmlite==0.41.1
+ipdb==0.13.13
 markdown-it-py==3.0.0
 MarkupSafe
 matplotlib==3.7.2
